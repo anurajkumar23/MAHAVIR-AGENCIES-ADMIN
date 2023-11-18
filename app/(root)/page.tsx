@@ -1,12 +1,24 @@
-import { UserButton } from "@clerk/nextjs";
+"use client";
 
- const SetupPage = () => {
+import { useEffect } from "react";
+
+import { useStoreModal } from "@/hooks/use-store-modal";
+
+const SetupPage = () => {
+  const onOpen = useStoreModal((state) => state.onOpen);
+  const isOpen = useStoreModal((state) => state.isOpen);
+
+  useEffect(() => {
+    if (!isOpen) {
+      onOpen();
+    }
+  }, [isOpen, onOpen]);
+
   return (
-    <div className='p-4'>
-        <UserButton afterSignOutUrl="/"/>
-        <p className="flex items-center justify-center h-full">Welcome to Home page 🔥</p>
+    <div className="p-4">
+      Root Page
     </div>
   )
-}
-
+};
+ 
 export default SetupPage;
