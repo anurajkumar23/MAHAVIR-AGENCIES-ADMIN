@@ -4,7 +4,7 @@ import prismadb from "@/lib/prismadb"
 import { BillboardClient } from "./components/client"
 import { BillboardColumn } from "./components/columns";
 
-const Billboards = async({
+const BillboardsPage = async({
   params
 }: {
   params: { storeId: string }
@@ -34,4 +34,4 @@ const Billboards = async({
   )
 }
 
-export default Billboards
+export default BillboardsPage
