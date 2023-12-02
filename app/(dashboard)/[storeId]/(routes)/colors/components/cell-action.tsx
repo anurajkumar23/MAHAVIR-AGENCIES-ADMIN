@@ -16,10 +16,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { AlertModal } from "@/components/modals/alert-modal";
 
-import { SizeColumn } from "./columns";
+import { ColorColumn } from "./columns";
 
 interface CellActionProps {
-    data: SizeColumn;
+    data: ColorColumn;
 }
 
 const CellAction: React.FC<CellActionProps> = ({
@@ -33,11 +33,11 @@ const CellAction: React.FC<CellActionProps> = ({
     const onConfirm = async () => {
       try {
         setLoading(true);
-        await axios.delete(`/api/${params.storeId}/sizes/${data.id}`);
-        toast.success('Size deleted.');
+        await axios.delete(`/api/${params.storeId}/colors/${data.id}`);
+        toast.success('Color deleted.');
         router.refresh();
       } catch (error) {
-        toast.error('Make sure you removed all products using this size first.');
+        toast.error('Make sure you removed all products using this color first.');
       } finally {
         setOpen(false);
         setLoading(false);
