@@ -46,7 +46,7 @@ const CellAction: React.FC<CellActionProps> = ({
 
     const onCopy = (id: string) => {
         navigator.clipboard.writeText(id);
-        toast.success('Size ID copied to clipboard.');
+        toast.success('Color ID copied to clipboard.');
       }
 
     return (
@@ -72,7 +72,7 @@ const CellAction: React.FC<CellActionProps> = ({
                  <Copy className="mr-2 h-4 w-4"/>
                  Copy Id
                 </DropdownMenuItem>
-                <DropdownMenuItem  onClick={() => router.push(`/${params.storeId}/sizes/${data.id}`)}>
+                <DropdownMenuItem  onClick={() => router.push(`/${params.storeId}/colors/${data.id}`)}>
                  <Edit className="mr-2 h-4 w-4"/>
                  Update
                 </DropdownMenuItem>
