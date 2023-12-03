@@ -68,6 +68,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({
       }
       router.refresh();
       router.push(`/${params.storeId}/sizes`);
+      router.refresh();
       toast.success(toastMessage);
     } catch (error: any) {
       toast.error('Something went wrong.');
@@ -82,6 +83,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({
       await axios.delete(`/api/${params.storeId}/sizes/${params.sizeId}`);
       router.refresh();
       router.push(`/${params.storeId}/sizes`);
+      router.refresh();
       toast.success('Size deleted.');
     } catch (error: any) {
       toast.error('Make sure you removed all products using this size first.');
