@@ -2,18 +2,18 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 
-import CellAction from "./cell-action"
+import { CellAction } from "./cell-action"
 
 export type ProductColumn = {
-  id: string;
+  id: string
   name: string;
   price: string;
-  size: string;
   category: string;
+  size: string;
   color: string;
+  createdAt: string;
   isFeatured: boolean;
   isArchived: boolean;
-  createdAt: string;
 }
 
 export const columns: ColumnDef<ProductColumn>[] = [
@@ -30,6 +30,10 @@ export const columns: ColumnDef<ProductColumn>[] = [
     header: "Featured",
   },
   {
+    accessorKey: "price",
+    header: "Price",
+  },
+  {
     accessorKey: "category",
     header: "Category",
   },
@@ -42,11 +46,8 @@ export const columns: ColumnDef<ProductColumn>[] = [
     header: "Color",
     cell: ({ row }) => (
       <div className="flex items-center gap-x-2">
-          {row.original.color}
-          <div 
-          className="h-6 w-6 rounded-full border"
-          style={{ backgroundColor: row.original.color }}
-          />
+        {row.original.color}
+        <div className="h-6 w-6 rounded-full border" style={{ backgroundColor: row.original.color }} />
       </div>
     )
   },
@@ -55,7 +56,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
     header: "Date",
   },
   {
-    id: "action",
-    cell: ({ row }) => <CellAction data={row.original}/>
-  }
-]
+    id: "actions",
+    cell: ({ row }) => <CellAction data={row.original} />
+  },
+];

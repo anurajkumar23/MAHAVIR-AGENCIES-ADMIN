@@ -1,25 +1,24 @@
 import { format } from "date-fns";
 
+import prismadb from "@/lib/prismadb";
 import { formatter } from "@/lib/utils";
-import prismadb from "@/lib/prismadb"
-import { ProductClient } from "./components/client"
+
+import { ProductsClient } from "./components/client";
 import { ProductColumn } from "./components/columns";
 
-
-const ProductsPage = async({
+const ProductsPage = async ({
   params
 }: {
   params: { storeId: string }
-}
-)=> {
+}) => {
   const products = await prismadb.product.findMany({
-    where:{
-      storeId:params.storeId
+    where: {
+      storeId: params.storeId
     },
-    include:{
+    include: {
       category: true,
-      size:true,
-      color:true,
+      size: true,
+      color: true,
     },
     orderBy: {
       createdAt: 'desc'
@@ -31,20 +30,20 @@ const ProductsPage = async({
     name: item.name,
     isFeatured: item.isFeatured,
     isArchived: item.isArchived,
-    price:  formatter.format(item.price.toNumber()),
+    price: formatter.format(item.price.toNumber()),
     category: item.category.name,
-    size: item.category.name,
+    size: item.size.name,
     color: item.color.value,
-    createdAt: format(item.createdAt, "do, MMMM  yyyy")
-  }))
+    createdAt: format(item.createdAt, 'do, MMMM  yyyy'),
+  }));
 
   return (
     <div className="flex-col">
-        <div className="flex-1 space-y-4 p-8 pt-6">
-      <ProductClient data={formattedProducts}/>
+      <div className="flex-1 space-y-4 p-8 pt-6">
+        <ProductsClient data={formattedProducts} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductsPage
+export default ProductsPage;
