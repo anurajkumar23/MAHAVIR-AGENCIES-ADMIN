@@ -21,9 +21,9 @@ export async function POST(
     if (!name) {
       return new NextResponse("Name is required", { status: 400 });
     }
-
+    
     if (!billboardId) {
-      return new NextResponse("Billboard Id is required", { status: 400 });
+      return new NextResponse("Billboard ID is required", { status: 400 });
     }
 
     if (!params.storeId) {

@@ -23,12 +23,11 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { Heading } from "@/components/ui/heading"
 import { AlertModal } from "@/components/modals/alert-modal"
-import ImageUpload from "@/components/ui/image-upload"
 
 const formSchema = z.object({
-  name: z.string().min(1),
-  value: z.string().min(4).regex(/^#/, {
-    message: "Sting must be a valid hex code",
+  name: z.string().min(2),
+  value: z.string().min(4).max(9).regex(/^#/, {
+    message: 'String must be a valid hex code'
   }),
 });
 
@@ -55,8 +54,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({
   const form = useForm<ColorFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
-      name: '',
-      value: ''
+      name: ''
     }
   });
 
@@ -70,7 +68,6 @@ export const ColorForm: React.FC<ColorFormProps> = ({
       }
       router.refresh();
       router.push(`/${params.storeId}/colors`);
-      router.refresh();
       toast.success(toastMessage);
     } catch (error: any) {
       toast.error('Something went wrong.');
@@ -85,7 +82,6 @@ export const ColorForm: React.FC<ColorFormProps> = ({
       await axios.delete(`/api/${params.storeId}/colors/${params.colorId}`);
       router.refresh();
       router.push(`/${params.storeId}/colors`);
-      router.refresh();
       toast.success('Color deleted.');
     } catch (error: any) {
       toast.error('Make sure you removed all products using this color first.');
@@ -141,11 +137,11 @@ export const ColorForm: React.FC<ColorFormProps> = ({
                   <FormLabel>Value</FormLabel>
                   <FormControl>
                     <div className="flex items-center gap-x-4">
-                    <Input disabled={loading} placeholder="Color value" {...field} />
-                    <div 
-                    className="p-4 rounded-full border"
-                    style={{ backgroundColor: field.value }}
-                    />
+                      <Input disabled={loading} placeholder="Color value" {...field} />
+                      <div 
+                        className="border p-4 rounded-full" 
+                        style={{ backgroundColor: field.value }}
+                      />
                     </div>
                   </FormControl>
                   <FormMessage />

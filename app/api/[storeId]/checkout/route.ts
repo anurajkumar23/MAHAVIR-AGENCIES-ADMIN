@@ -38,7 +38,7 @@ export async function POST(
     line_items.push({
       quantity: 1,
       price_data: {
-        currency: 'INR',
+        currency: 'USD',
         product_data: {
           name: product.name,
         },

@@ -16,8 +16,8 @@ export async function GET(
       where: {
         id: params.categoryId
       },
-      include:{
-        billboard: true,
+      include: {
+        billboard: true
       }
     });
   
@@ -30,7 +30,7 @@ export async function GET(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string,  categoryId: string } }
+  { params }: { params: { categoryId: string, storeId: string } }
 ) {
   try {
     const { userId } = auth();
@@ -54,7 +54,7 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const category = await prismadb.category.deleteMany({
+    const category = await prismadb.category.delete({
       where: {
         id: params.categoryId,
       }
@@ -70,7 +70,7 @@ export async function DELETE(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string, categoryId: string } }
+  { params }: { params: { categoryId: string, storeId: string } }
 ) {
   try {   
     const { userId } = auth();
@@ -83,12 +83,12 @@ export async function PATCH(
       return new NextResponse("Unauthenticated", { status: 403 });
     }
 
-    if (!name) {
-      return new NextResponse("Name is required", { status: 400 });
+    if (!billboardId) {
+      return new NextResponse("Billboard ID is required", { status: 400 });
     }
 
-    if (!billboardId) {
-      return new NextResponse("Billboard Id is required", { status: 400 });
+    if (!name) {
+      return new NextResponse("Name is required", { status: 400 });
     }
 
     if (!params.categoryId) {

@@ -43,7 +43,7 @@ export async function DELETE(
     const storeByUserId = await prismadb.store.findFirst({
       where: {
         id: params.storeId,
-        userId,
+        userId
       }
     });
 
@@ -51,9 +51,9 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const color = await prismadb.color.deleteMany({
+    const color = await prismadb.color.delete({
       where: {
-        id: params.colorId,
+        id: params.colorId
       }
     });
   
@@ -69,13 +69,13 @@ export async function PATCH(
   req: Request,
   { params }: { params: { colorId: string, storeId: string } }
 ) {
-  try {   
+  try {
     const { userId } = auth();
 
     const body = await req.json();
-    
+
     const { name, value } = body;
-    
+
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
     }
@@ -88,6 +88,7 @@ export async function PATCH(
       return new NextResponse("Value is required", { status: 400 });
     }
 
+
     if (!params.colorId) {
       return new NextResponse("Color id is required", { status: 400 });
     }
@@ -95,7 +96,7 @@ export async function PATCH(
     const storeByUserId = await prismadb.store.findFirst({
       where: {
         id: params.storeId,
-        userId,
+        userId
       }
     });
 
@@ -103,9 +104,9 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const color = await prismadb.color.updateMany({
+    const color = await prismadb.color.update({
       where: {
-        id: params.colorId,
+        id: params.colorId
       },
       data: {
         name,

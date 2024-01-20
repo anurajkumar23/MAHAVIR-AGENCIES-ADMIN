@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs';
 
 import prismadb from '@/lib/prismadb';
- 
+
 export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }
@@ -12,16 +12,7 @@ export async function POST(
 
     const body = await req.json();
 
-    const { 
-      name,
-      price,
-      categoryId,
-      colorId,
-      sizeId,
-      images,
-      isFeatured,
-      isArchived,
-     } = body;
+    const { name, price, categoryId, colorId, sizeId, images, isFeatured, isArchived } = body;
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
@@ -32,7 +23,11 @@ export async function POST(
     }
 
     if (!images || !images.length) {
-      return new NextResponse("Images is required", { status: 400 });
+      return new NextResponse("Images are required", { status: 400 });
+    }
+
+    if (!price) {
+      return new NextResponse("Price is required", { status: 400 });
     }
 
     if (!categoryId) {
@@ -54,7 +49,7 @@ export async function POST(
     const storeByUserId = await prismadb.store.findFirst({
       where: {
         id: params.storeId,
-        userId,
+        userId
       }
     });
 
@@ -72,14 +67,14 @@ export async function POST(
         colorId,
         sizeId,
         storeId: params.storeId,
-        images:{
-          createMany:{
+        images: {
+          createMany: {
             data: [
-              ...images.map((image: {url: string}) => image)
-            ]
-          }
-        }
-      }
+              ...images.map((image: { url: string }) => image),
+            ],
+          },
+        },
+      },
     });
   
     return NextResponse.json(product);
