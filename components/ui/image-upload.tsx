@@ -22,6 +22,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
+  const uploadPreset = process.env.NEXT_PUBLIC_UPLOAD_PRESET;
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -53,7 +55,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           </div>
         ))}
       </div>
-      <CldUploadWidget onUpload={onUpload} uploadPreset="t4drjppf">
+      <CldUploadWidget onUpload={onUpload} uploadPreset={uploadPreset}>
         {({ open }) => {
           const onClick = () => {
             open();
