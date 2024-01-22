@@ -1,4 +1,4 @@
-import { CreditCard, DollarSign, Package } from "lucide-react";
+import { CreditCard, IndianRupee, Package } from "lucide-react";
 
 import { Separator } from "@/components/ui/separator";
 import { Overview } from "@/components/overview";
@@ -35,7 +35,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
               <CardTitle className="text-sm font-medium">
                 Total Revenue
               </CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
+              <IndianRupee className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{formatter.format(totalRevenue)}</div>
