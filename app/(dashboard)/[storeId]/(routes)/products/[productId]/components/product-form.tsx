@@ -32,10 +32,12 @@ const formSchema = z.object({
   name: z.string().min(1),
   images: z.object({ url: z.string() }).array(),
   price: z.coerce.number().min(1),
+  discountedPrice: z.coerce.number().min(1),
   categoryId: z.string().min(1),
   colorId: z.string().min(1),
   sizeId: z.string().min(1),
   isFeatured: z.boolean().default(false).optional(),
+  newArrivals: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional()
 });
 
@@ -70,14 +72,17 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const defaultValues = initialData ? {
     ...initialData,
     price: parseFloat(String(initialData?.price)),
+    discountedPrice: parseFloat(String(initialData?.discountedPrice)),
   } : {
     name: '',
     images: [],
     price: 0,
+    discountedPrice: 0,
     categoryId: '',
     colorId: '',
     sizeId: '',
     isFeatured: false,
+    newArrivals: false,
     isArchived: false,
   }
 
@@ -121,13 +126,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
   return (
     <>
-    <AlertModal 
-      isOpen={open} 
-      onClose={() => setOpen(false)}
-      onConfirm={onDelete}
-      loading={loading}
-    />
-     <div className="flex items-center justify-between">
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={onDelete}
+        loading={loading}
+      />
+      <div className="flex items-center justify-between">
         <Heading title={title} description={description} />
         {initialData && (
           <Button
@@ -150,9 +155,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               <FormItem>
                 <FormLabel>Images</FormLabel>
                 <FormControl>
-                  <ImageUpload 
-                    value={field.value.map((image) => image.url)} 
-                    disabled={loading} 
+                  <ImageUpload
+                    value={field.value.map((image) => image.url)}
+                    disabled={loading}
                     onChange={(url) => field.onChange([...field.value, { url }])}
                     onRemove={(url) => field.onChange([...field.value.filter((current) => current.url !== url)])}
                   />
@@ -181,6 +186,19 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Price</FormLabel>
+                  <FormControl>
+                    <Input type="number" disabled={loading} placeholder="9.99" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="discountedPrice"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>DiscountedPrice</FormLabel>
                   <FormControl>
                     <Input type="number" disabled={loading} placeholder="9.99" {...field} />
                   </FormControl>
@@ -272,6 +290,30 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                     </FormLabel>
                     <FormDescription>
                       This product will appear on the home page
+                    </FormDescription>
+                  </div>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="newArrivals"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      // @ts-ignore
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>
+                      NewArrivals
+                    </FormLabel>
+                    <FormDescription>
+                      This product will appear down the Featured products on the home page
+                      ans new sign tag on the products
                     </FormDescription>
                   </div>
                 </FormItem>

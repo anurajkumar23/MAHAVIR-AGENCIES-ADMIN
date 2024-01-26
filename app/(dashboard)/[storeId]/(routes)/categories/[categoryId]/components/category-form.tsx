@@ -24,10 +24,12 @@ import { Separator } from "@/components/ui/separator"
 import { Heading } from "@/components/ui/heading"
 import { AlertModal } from "@/components/modals/alert-modal"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import ImageUpload from "@/components/ui/image-upload"
 
 const formSchema = z.object({
   name: z.string().min(2),
   billboardId: z.string().min(1),
+  imageUrl: z.string().min(1),
 });
 
 type CategoryFormValues = z.infer<typeof formSchema>
@@ -57,6 +59,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     defaultValues: initialData || {
       name: '',
       billboardId: '',
+      imageUrl: '',
     }
   });
 
@@ -149,6 +152,24 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                       ))}
                     </SelectContent>
                   </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="imageUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Background image</FormLabel>
+                  <FormControl>
+                    <ImageUpload 
+                      value={field.value ? [field.value] : []} 
+                      disabled={loading} 
+                      onChange={(url) => field.onChange(url)}
+                      onRemove={() => field.onChange('')}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

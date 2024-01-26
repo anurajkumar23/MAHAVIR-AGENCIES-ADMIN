@@ -42,6 +42,7 @@ model Category {
   billboardId String      // Foreign Key to Billboard
   billboard   Billboard   @relation(fields: [billboardId], references: [id])
   name        String
+  imageUrl    String
   products    Product[]   @relation("CategoryToProduct")
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
@@ -58,6 +59,8 @@ model Product {
   category    Category  @relation("CategoryToProduct", fields: [categoryId], references: [id])
   name        String
   price       Decimal
+  discountedPrice  Decimal?
+  newArrivals Boolean   @default(false)
   isFeatured  Boolean   @default(false)
   isArchived  Boolean   @default(false)
   sizeId      String    // Foreign Key to Size
