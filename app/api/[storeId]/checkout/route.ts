@@ -38,11 +38,11 @@ export async function POST(
     line_items.push({
       quantity: 1,
       price_data: {
-        currency: 'USD',
+        currency: 'INR',
         product_data: {
           name: product.name,
         },
-        unit_amount: product.price.toNumber() * 100
+        unit_amount: (product.discountedPrice ?? product.price).toNumber() * 100,
       }
     });
   });

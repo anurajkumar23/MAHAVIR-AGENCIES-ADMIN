@@ -32,7 +32,7 @@ const formSchema = z.object({
   name: z.string().min(1),
   images: z.object({ url: z.string() }).array(),
   price: z.coerce.number().min(1),
-  discountedPrice: z.coerce.number().min(1),
+  discountedPrice: z.coerce.number().min(1).optional(),
   categoryId: z.string().min(1),
   colorId: z.string().min(1),
   sizeId: z.string().min(1),
@@ -72,12 +72,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const defaultValues = initialData ? {
     ...initialData,
     price: parseFloat(String(initialData?.price)),
-    discountedPrice: parseFloat(String(initialData?.discountedPrice)),
+    discountedPrice: initialData?.discountedPrice ? parseFloat(String(initialData.discountedPrice)) : undefined,
   } : {
     name: '',
     images: [],
     price: 0,
-    discountedPrice: 0,
+    discountedPrice: undefined,
     categoryId: '',
     colorId: '',
     sizeId: '',
