@@ -42,7 +42,7 @@ export async function POST(
         product_data: {
           name: product.name,
         },
-        unit_amount: (product.discountedPrice ?? product.price).toNumber() * 100,
+        unit_amount: Number(product.discountedPrice ?? product.price) * 100,
       }
     });
   });
